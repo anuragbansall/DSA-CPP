@@ -8,7 +8,6 @@ Welcome to the DSA-CPP repository! This repository contains a collection of Data
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Usage](#usage)
 
 ## Introduction
 
@@ -45,26 +44,4 @@ To install and use the code from this repository, follow these steps:
 
 ## Usage
 
-Each data structure and algorithm is implemented in its own file within the repository. You can include these files in your C++ projects and use them as needed. Example usage is provided in the comments within each file.
-
-### Example
-
-Here's an example of how to use the binary search algorithm implemented in this repository:
-
-```cpp
-#include <iostream>
-#include "binary_search.h" // Include the binary search header file
-
-int main() {
-    std::vector<int> arr = {2, 3, 4, 10, 40};
-    int target = 10;
-    int result = binary_search(arr, target);
-
-    if (result != -1) {
-        std::cout << "Element is present at index " << result << std::endl;
-    } else {
-        std::cout << "Element is not present in array" << std::endl;
-    }
-
-    return 0;
-}
+Each data structure and algorithm is implemented in its own file within the repository. You can include these files in your C++ projects and use them as needed.
