@@ -4,7 +4,7 @@ using namespace std;
 
 int binarySearch(vector<int> &arr, int left, int end, int key);
 void findAllOccurrences(vector<int> &arr, int index, int n, int key);
-void countContiguousSubstrings(string s, int index, int n, int count);
+int countContiguousSubstrings(string &s, int i, int j);
 
 int main(void)
 {
@@ -42,6 +42,9 @@ int main(void)
         Sample Output 2: 4
         The substrings are a, b, a and aba
     */
+    string s = "abcab";
+    int count = countContiguousSubstrings(s, 0, s.length() - 1);
+    cout << count << endl;
 
     /*
     Question 4:
@@ -123,7 +126,23 @@ void findAllOccurrences(vector<int> &arr, int index, int n, int key)
     findAllOccurrences(arr, index + 1, n, key);
 }
 
-void countContiguousSubstrings(string s, int index, int n, int count)
+int countContiguousSubstrings(string &s, int i, int j)
 {
     // TO be implemented...
+    // For now lets just print all substrings
+    if (i > j)
+    {
+        return 0;
+    }
+
+    int res = countContiguousSubstrings(s, i + 1, j) +
+              countContiguousSubstrings(s, i, j - 1) -
+              countContiguousSubstrings(s, i + 1, j - 1);
+
+    if (s[i] == s[j])
+    {
+        res++;
+    }
+
+    return res;
 }
