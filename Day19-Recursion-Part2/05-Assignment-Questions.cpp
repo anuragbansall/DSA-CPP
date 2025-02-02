@@ -1,10 +1,19 @@
 #include <iostream>
+#include <string>
 #include <vector>
 using namespace std;
 
 int binarySearch(vector<int> &arr, int left, int end, int key);
 void findAllOccurrences(vector<int> &arr, int index, int n, int key);
 int countContiguousSubstrings(string &s, int i, int j);
+
+int towerOfHanoi(int n, string rod1, string rod2, string rod3);
+
+long long power(long long a, long long b);
+
+int countGoodNumbers(long long n);
+
+const int MOD = 1e9 + 7;
 
 int main(void)
 {
@@ -71,6 +80,9 @@ int main(void)
         - Shift the last disk from 'A' to 'C'.
         - Shift 'n-1' disks from 'B' to 'C', using A.
     */
+    int n = 3;
+    int result = towerOfHanoi(n, "A", "B", "C");
+    cout << result << endl;
 
     /*
     Question 5:
@@ -83,6 +95,9 @@ int main(void)
         Explanation: The good numbers of length 1 are "0", "2", "4", "6", "8".
         Hint: This Qs uses the binary exponentiation technique we learnt in the Bit Manipulation chapter.
     */
+    long long n5 = 1;
+    long long result5 = countGoodNumbers(n5);
+    cout << result5 << endl;
 
     return 0;
 }
@@ -145,4 +160,53 @@ int countContiguousSubstrings(string &s, int i, int j)
     }
 
     return res;
+}
+
+int towerOfHanoi(int n, string rod1, string rod2, string rod3)
+{
+    if (n == 1)
+    {
+        cout << "Move disk 1 from " << rod1 << " to " << rod3 << endl;
+        return 1;
+    }
+
+    return towerOfHanoi(n - 1, rod1, rod3, rod2) + 1 + towerOfHanoi(n - 1, rod2, rod1, rod3);
+}
+/*
+    Approach:
+    - Shift 'n-1' disks from 'A' to 'B', using C.
+    - Shift the last disk from 'A' to 'C'.
+    - Shift 'n-1' disks from 'B' to 'C', using A.
+*/
+
+long long power(long long a, long long b)
+{
+    if (b == 0)
+        return 1;
+
+    long long half_power = power(a, b / 2);
+    half_power = (half_power * half_power) % MOD;
+
+    if (b % 2 == 0)
+        return half_power;
+    else
+        return (half_power * (a % MOD)) % MOD;
+}
+
+int countGoodNumbers(long long n)
+{
+    long long ed, od;
+
+    if (n % 2 == 0)
+    {
+        od = n / 2;
+        ed = n / 2;
+    }
+    else
+    {
+        od = n / 2;
+        ed = (n + 1) / 2;
+    }
+
+    return (power(5, ed) * power(4, od)) % MOD;
 }
