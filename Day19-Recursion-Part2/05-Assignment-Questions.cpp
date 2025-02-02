@@ -1,5 +1,10 @@
 #include <iostream>
+#include <vector>
 using namespace std;
+
+int binarySearch(vector<int> &arr, int left, int end, int key);
+void findAllOccurrences(vector<int> &arr, int index, int n, int key);
+void countContiguousSubstrings(string s, int index, int n, int count);
 
 int main(void)
 {
@@ -10,6 +15,10 @@ int main(void)
         Output: 4 (index of key)
         Use the starting index & ending index logic used in rotated, sorted array Qs.
     */
+    vector<int> arr = {1, 2, 3, 4, 5, 6, 7};
+    int key = 5;
+    int index = binarySearch(arr, 0, arr.size() - 1, key);
+    cout << index << endl;
 
     /*
     Question 2:
@@ -18,6 +27,9 @@ int main(void)
         Sample Input: arr[] = {3, 2, 4, 5, 6, 2, 7, 2, 2}, key = 2
         Sample Output: 1 5 7 8
     */
+    vector<int> arr2 = {3, 2, 4, 5, 6, 2, 7, 2, 2};
+    int key2 = 2;
+    findAllOccurrences(arr2, 0, arr2.size(), key2);
 
     /*
     Question 3:
@@ -70,4 +82,48 @@ int main(void)
     */
 
     return 0;
+}
+
+int binarySearch(vector<int> &arr, int left, int end, int key)
+{
+    if (left > end)
+    {
+        return -1; // Key not found
+    }
+
+    int mid = left + (end - left) / 2;
+
+    if (arr[mid] == key)
+    {
+        return mid;
+    }
+    else if (arr[mid] < key)
+    {
+        return binarySearch(arr, mid + 1, end, key);
+    }
+    else
+    {
+        return binarySearch(arr, left, mid - 1, key);
+    }
+}
+
+void findAllOccurrences(vector<int> &arr, int index, int n, int key)
+{
+    if (index == n)
+    {
+        cout << endl;
+        return;
+    }
+
+    if (arr[index] == key)
+    {
+        cout << index << " ";
+    }
+
+    findAllOccurrences(arr, index + 1, n, key);
+}
+
+void countContiguousSubstrings(string s, int index, int n, int count)
+{
+    // TO be implemented...
 }
