@@ -52,11 +52,11 @@ int main()
     Hierarchical Inheritance
     In hierarchical inheritance, more than one derived class inherits from a single base class. In the above example, the Bird and Dog classes inherit from the Animal class. The Bird and Dog classes are the derived classes, and the Animal class is the base class.
 
-            -------------------
-            |     Animal      |
-            -------------------
-                |           |
-                V           V
+                -------------------
+                |     Animal      |
+                -------------------
+                    |         |
+                    V         V
     -------------------    -------------------
     |      Bird       |    |      Dog        |
     -------------------    -------------------

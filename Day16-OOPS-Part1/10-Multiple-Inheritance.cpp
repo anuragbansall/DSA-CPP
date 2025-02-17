@@ -51,11 +51,11 @@ int main()
     In multiple inheritance, a class can inherit from more than one classes. In the above example, the TA class inherits from both the Teacher and Student classes. The TA class is the derived class, and the Teacher and Student classes are the base classes.
 
     -------------------     -------------------
-    |      Teacher      |   |      Student      |
+    |      Teacher    |     |      Student    |
     -------------------     -------------------
                 |                   |
                 V                   V
                 -------------------
-                |        TA         |
+                |        TA       |
                 -------------------
 */

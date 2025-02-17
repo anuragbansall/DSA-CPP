@@ -5,10 +5,10 @@ using namespace std;
 class A
 {
     string secret = "I am a secret";
-    friend class B; // Friend Class
+    friend class B; // Friend Class Declaration
 };
 
-class B // Friend Class
+class B // Friend Class Definition
 {
 public:
     void showSecret(A obj)

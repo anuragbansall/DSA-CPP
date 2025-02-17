@@ -27,13 +27,13 @@ int StaticDemoCls::staticVar = 0; // Static Variable Initialization using Scope 
 
 int main()
 {
-    staticDemoFunc();
-    staticDemoFunc();
-    staticDemoFunc();
+    staticDemoFunc(); // Count: 1
+    staticDemoFunc(); // Count: 2
+    staticDemoFunc(); // Count: 3
 
-    StaticDemoCls s1;
-    StaticDemoCls s2;
-    StaticDemoCls s3;
+    StaticDemoCls s1; // StaticVar: 1
+    StaticDemoCls s2; // StaticVar: 2
+    StaticDemoCls s3; // StaticVar: 3
 
     if (true)
     {
