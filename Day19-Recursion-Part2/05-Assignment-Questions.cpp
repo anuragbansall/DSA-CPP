@@ -143,8 +143,6 @@ void findAllOccurrences(vector<int> &arr, int index, int n, int key)
 
 int countContiguousSubstrings(string &s, int i, int j)
 {
-    // TO be implemented...
-    // For now lets just print all substrings
     if (i > j)
     {
         return 0;

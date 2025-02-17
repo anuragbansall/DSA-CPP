@@ -29,8 +29,10 @@ int power(int x, int n)
     {
         return result;
     }
-
-    return x * result;
+    else
+    {
+        return x * result;
+    }
 }
 // Time Complexity: O(log(n))
 
