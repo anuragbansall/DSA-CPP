@@ -41,7 +41,7 @@ void quickSort(vector<int> &arr, int left, int right)
 {
     if (left >= right)
     {
-        return;
+        return; // Base case
     }
 
     int pivot = partition(arr, left, right); // get the index of the pivot element
@@ -62,7 +62,6 @@ int partition(vector<int> &arr, int left, int right)
             i++;
             swap(arr[i], arr[j]); // swap the elements at i and j
         }
-        j++;
     }
 
     i++; // increment i to get the correct position of the pivot element
