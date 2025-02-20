@@ -8,6 +8,8 @@ void merge(vector<string> &arr, int start, int mid, int end);
 void mergeSort(vector<string> &arr, int start, int end);
 int majorityElement(vector<int> &nums, int start, int end);
 int countInRange(vector<int> &nums, int start, int end, int target);
+int modifiedMerge(vector<int> &nums, int start, int mid, int end);
+int inversionCount(vector<int> &nums, int start, int end);
 
 int main(void)
 {
@@ -58,6 +60,8 @@ int main(void)
         (Hint: A sorting algorithm will be used to solve this question.)
         Note - This question is important. Even if you are not able to come up with the approach, please understand the solution.
     */
+    vector<int> arr1 = {2, 4, 1, 3, 5};
+    cout << "Inversion Count: " << inversionCount(arr1, 0, arr1.size() - 1) << endl;
 
     return 0;
 }
@@ -155,4 +159,59 @@ int majorityElement(vector<int> &nums, int start, int end)
 
         return leftCount > rightCount ? leftMajority : rightMajority;
     }
+}
+
+int modifiedMerge(vector<int> &nums, int start, int mid, int end)
+{
+    int i = start;
+    int j = mid + 1;
+    int invCount = 0;
+
+    vector<int> temp;
+
+    while (i <= mid && j <= end)
+    {
+        if (nums[i] <= nums[j])
+        {
+            temp.push_back(nums[i++]);
+        }
+        else
+        {
+            temp.push_back(nums[j++]);
+            invCount += (mid - i + 1);
+        }
+    }
+
+    while (i <= mid)
+    {
+        temp.push_back(nums[i++]);
+    }
+    while (j <= end)
+    {
+        temp.push_back(nums[j++]);
+    }
+
+    for (int i = start, j = 0; i <= end; i++)
+    {
+        nums[i] = temp[j++];
+    }
+
+    return invCount;
+}
+
+int inversionCount(vector<int> &nums, int start, int end)
+{
+    if (start >= end)
+    {
+        return 0;
+    }
+
+    int mid = start + (end - start) / 2;
+
+    int leftCount = inversionCount(nums, start, mid);
+    int rightCount = inversionCount(nums, mid + 1, end);
+
+    int mergeCount = modifiedMerge(nums, start, mid, end);
+
+    return leftCount + rightCount + mergeCount;
 }
