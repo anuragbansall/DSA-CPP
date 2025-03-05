@@ -71,4 +71,12 @@ int main(void)
             - Find the highest power of the input in the math formula.
             - The highest power of the input in the math formula is the Big O notation of the program.
             - Cormen's Rule: If the function has multiple terms, the one with the highest power of the input is the Big O notation of the program.
+
+    Common Time Complexities:
+        - O(1) - Constant Time Complexity
+        - O(log n) - Logarithmic Time Complexity
+        - O(n) - Linear Time Complexity
+        - O(n log n) - Linearithmic Time Complexity
+        - O(n^2) - Quadratic Time Complexity
+        - O(2^n) - Exponential Time Complexity
 */
