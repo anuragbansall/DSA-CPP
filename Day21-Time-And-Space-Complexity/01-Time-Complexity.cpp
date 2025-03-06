@@ -79,4 +79,17 @@ int main(void)
         - O(n log n) - Linearithmic Time Complexity
         - O(n^2) - Quadratic Time Complexity
         - O(2^n) - Exponential Time Complexity
+
+    Logarithmic Time Complexity:
+        - O(log n) - Logarithmic Time Complexity
+        - The time taken by the program to run is logarithmic with respect to the size of the input.
+        - A logarithmic is the inverse of an exponential function. For a given number x, the logarithm of x to the base b is the power to which b must be raised to obtain x.
+            Mathematically:
+                log_b(x) = y
+                if and only if
+                b^y = x
+
+            - Example: 
+            log_2(8) = 3
+            because 2^3 = 8
 */
