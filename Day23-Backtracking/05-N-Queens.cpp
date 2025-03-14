@@ -4,6 +4,7 @@ using namespace std;
 
 void printBoard(vector<vector<char>> &board);
 void nQueens(vector<vector<char>> &board, int row);
+bool isSafe(vector<vector<char>> &board, int row, int col);
 
 int main(void)
 {
@@ -17,7 +18,7 @@ int main(void)
         . . Q .
     */
 
-    int n = 2;
+    int n = 4;
 
     vector<vector<char>> board(n, vector<char>(n, '.'));
     nQueens(board, 0);
@@ -50,8 +51,52 @@ void nQueens(vector<vector<char>> &board, int row)
 
     for (int col = 0; col < board.size(); col++)
     {
-        board[row][col] = 'Q';
-        nQueens(board, row + 1);
-        board[row][col] = '.';
+        if (isSafe(board, row, col))
+        {
+            board[row][col] = 'Q';
+            nQueens(board, row + 1);
+            board[row][col] = '.';
+        }
     }
-}
+} // Time Complexity - O(N!) and Space Complexity - O(N^2)
+
+bool isSafe(vector<vector<char>> &board, int row, int col)
+{
+    // Check for the same column
+    for (int i = 0; i < row; i++)
+    {
+        if (board[i][col] == 'Q')
+        {
+            return false;
+        }
+    }
+
+    // Check for the same row
+    for (int i = 0; i < col; i++)
+    {
+        if (board[row][i] == 'Q')
+        {
+            return false;
+        }
+    }
+
+    // Check for the left diagonal
+    for (int i = row, j = col; i >= 0 && j >= 0; i--, j--)
+    {
+        if (board[i][j] == 'Q')
+        {
+            return false;
+        }
+    }
+
+    // Check for the right diagonal
+    for (int i = row, j = col; i >= 0 && j < board.size(); i--, j++)
+    {
+        if (board[i][j] == 'Q')
+        {
+            return false;
+        }
+    }
+
+    return true;
+} // Time Complexity - O(N^2) and Space Complexity - O(1)
