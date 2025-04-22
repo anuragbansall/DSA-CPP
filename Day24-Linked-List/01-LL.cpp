@@ -52,6 +52,7 @@ public:
             newNode->next = head; // set the next of the new node to the current head
             head = newNode;       // set the head to the new node
         }
+
         size++; // increment the size of the list
     }
 
@@ -70,7 +71,62 @@ public:
             tail->next = newNode; // set the next of the current tail to the new node
             tail = newNode;       // set the tail to the new node
         }
+
         size++; // increment the size of the list
+    }
+
+    // Method to print the list
+    void printList()
+    {
+        Node *current = head; // start from the head
+
+        while (current != NULL)
+        {
+            cout << current->data << " -> "; // print the data of the current node
+            current = current->next;         // move to the next node
+        }
+
+        cout << "NULL" << endl; // print NULL at the end of the list
+    }
+
+    // Method to get the size of the list
+    int getSize()
+    {
+        return size; // return the size of the list
+    }
+
+    // Method to insert a node at a specific position in the list
+    void insertAt(int position, int value)
+    {
+        Node *newNode = new Node(value); // create a new node
+
+        if (position < 0 || position > size) // check if the position is valid
+        {
+            cout << "Invalid position" << endl; // print error message
+            return;                             // exit the method
+        }
+
+        if (position == 0) // if the position is 0, add to the front
+        {
+            push_front(value); // call push_front method
+        }
+        else if (position == size) // if the position is equal to size, add to the end
+        {
+            push_back(value); // call push_back method
+        }
+        else
+        {
+            Node *current = head; // start from the head
+
+            for (int i = 0; i < position - 1; i++) // move to the node before the position
+            {
+                current = current->next;
+            }
+
+            newNode->next = current->next; // set the next of the new node to the next of the current node
+            current->next = newNode;       // set the next of the current node to the new node
+            size++;                        // increment the size of the list
+        }
     }
 };
 
@@ -83,6 +139,13 @@ int main(void)
 
     ll.push_back(30); // add 30 to the end of the list
     ll.push_back(40); // add 40 to the end of the list
+
+    ll.insertAt(2, 25); // insert 25 at position 2
+    ll.insertAt(10, 5); // insert 5 at position 10 (invalid position)
+
+    ll.printList(); // print the list
+
+    cout << "Size of the list: " << ll.getSize() << endl; // print the size of the list
 
     return 0;
 }
