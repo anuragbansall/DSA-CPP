@@ -19,7 +19,6 @@ public:
     // Destructor
     ~Node()
     {
-        cout << "Node Destructor called for value: " << data << endl; // print message
         // Destructor to free memory
         if (next != NULL)
         {
@@ -52,7 +51,6 @@ public:
     // Destructor
     ~List()
     {
-        cout << "List Destructor called" << endl; // print message
         // Destructor to free memory
         if (head != NULL)
         {
@@ -154,6 +152,55 @@ public:
             size++;                        // increment the size of the list
         }
     }
+
+    // Mehod to remove a first node from the list
+    void pop_front()
+    {
+        if (head == NULL) // check if the list is empty
+        {
+            cout << "List is empty" << endl; // print error message
+            return;                          // exit the method
+        }
+
+        Node *temp = head; // store the head node in a temporary variable
+        head = head->next; // set the head to the next node
+        temp->next = NULL; // set the next of the temporary node to NULL
+
+        delete temp; // delete the temporary node
+        size--;      // decrement the size of the list
+    }
+
+    // Method to remove a last node from the list
+    void pop_back()
+    {
+        if (head == NULL) // check if the list is empty
+        {
+            cout << "List is empty" << endl; // print error message
+            return;                          // exit the method
+        }
+
+        if (head->next == NULL) // if there is only one node in the list
+        {
+            delete head; // delete the head node
+            head = NULL; // set head to NULL
+            tail = NULL; // set tail to NULL
+        }
+        else
+        {
+            Node *current = head; // start from the head
+
+            while (current->next->next != NULL) // move to the second last node
+            {
+                current = current->next;
+            }
+
+            delete current->next; // delete the last node
+            current->next = NULL; // set the next of the second last node to NULL
+            tail = current;       // set the tail to the second last node
+        }
+
+        size--; // decrement the size of the list
+    }
 };
 
 int main(void)
@@ -168,6 +215,9 @@ int main(void)
 
     ll.insertAt(2, 25); // insert 25 at position 2
     ll.insertAt(10, 5); // insert 5 at position 10 (invalid position)
+
+    ll.pop_front(); // remove the first node from the list
+    ll.pop_back();  // remove the last node from the list
 
     ll.printList(); // print the list
 
