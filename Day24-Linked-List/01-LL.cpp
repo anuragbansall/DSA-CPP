@@ -16,6 +16,18 @@ public:
         next = NULL;
     }
 
+    // Destructor
+    ~Node()
+    {
+        cout << "Node Destructor called for value: " << data << endl; // print message
+        // Destructor to free memory
+        if (next != NULL)
+        {
+            delete next; // delete the next node
+            next = NULL; // set next to NULL
+        }
+    }
+
     // Method to get the data of the node in the List
     friend class List;
 };
@@ -35,6 +47,20 @@ public:
         head = NULL;
         tail = NULL;
         size = 0;
+    }
+
+    // Destructor
+    ~List()
+    {
+        cout << "List Destructor called" << endl; // print message
+        // Destructor to free memory
+        if (head != NULL)
+        {
+            delete head; // delete the head node
+            head = NULL; // set head to NULL
+        }
+
+        size = 0; // set size to 0
     }
 
     // Method to add a node to the start of the list
