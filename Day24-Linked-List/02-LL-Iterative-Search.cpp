@@ -79,9 +79,25 @@ public:
 
         size++; // increment the size of the list
     }
-};
 
-int searchIterative(List &list, int value);
+    int searchIterative(List &list, int value)
+    {
+        Node *current = list.head;
+        int index = 0;
+
+        while (current != NULL)
+        {
+            if (current->data == value)
+            {
+                return index;
+            }
+            current = current->next;
+            index++;
+        }
+
+        return -1;
+    }
+};
 
 int main(void)
 {
@@ -92,26 +108,9 @@ int main(void)
     list.push_back(40);
     list.push_back(50);
 
-    int idx = searchIterative(list, 30);
-    cout << "Value found at index: " << idx << endl;
+    cout << list.searchIterative(list, 30) << endl; // Output: 2
+    cout << list.searchIterative(list, 60) << endl; // Output: -1
+    cout << list.searchIterative(list, 10) << endl; // Output: 0
 
     return 0;
-}
-
-int searchIterative(List &list, int value)
-{
-    Node *current = list.head;
-    int index = 0;
-
-    while (current != NULL)
-    {
-        if (current->data == value)
-        {
-            return index;
-        }
-        current = current->next;
-        index++;
-    }
-
-    return -1;
 }
