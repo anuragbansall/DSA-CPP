@@ -79,10 +79,29 @@ public:
 
         size++; // increment the size of the list
     }
-};
 
-int searchRecursive(List &list, int value);
-int searchRecursiveHelper(Node *current, int value);
+    int searchRecursive(List &list, int value)
+    {
+        return searchRecursiveHelper(list.head, value);
+    }
+
+    int searchRecursiveHelper(Node *current, int value)
+    {
+        if (current == NULL)
+        {
+            return -1;
+        }
+
+        if (current->data == value)
+        {
+            return 0;
+        }
+
+        int idx = searchRecursiveHelper(current->next, value);
+
+        return (idx == -1) ? -1 : idx + 1;
+    }
+};
 
 int main(void)
 {
@@ -93,31 +112,9 @@ int main(void)
     list.push_back(40);
     list.push_back(50);
 
-    cout << searchRecursive(list, 30) << endl; // Output: 2
-    cout << searchRecursive(list, 60) << endl; // Output: -1
-    cout << searchRecursive(list, 10) << endl; // Output: 0
+    cout << list.searchRecursive(list, 30) << endl; // Output: 2
+    cout << list.searchRecursive(list, 60) << endl; // Output: -1
+    cout << list.searchRecursive(list, 10) << endl; // Output: 0
 
     return 0;
-}
-
-int searchRecursive(List &list, int value)
-{
-    return searchRecursiveHelper(list.head, value);
-}
-
-int searchRecursiveHelper(Node *current, int value)
-{
-    if (current == NULL)
-    {
-        return -1;
-    }
-
-    if (current->data == value)
-    {
-        return 0;
-    }
-
-    int idx = searchRecursiveHelper(current->next, value);
-
-    return (idx == -1) ? -1 : idx + 1;
 }
