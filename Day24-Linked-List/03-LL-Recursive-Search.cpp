@@ -80,9 +80,9 @@ public:
         size++; // increment the size of the list
     }
 
-    int searchRecursive(List &list, int value)
+    int searchRecursive(int value)
     {
-        return searchRecursiveHelper(list.head, value);
+        return searchRecursiveHelper(head, value);
     }
 
     int searchRecursiveHelper(Node *current, int value)
@@ -112,9 +112,9 @@ int main(void)
     list.push_back(40);
     list.push_back(50);
 
-    cout << list.searchRecursive(list, 30) << endl; // Output: 2
-    cout << list.searchRecursive(list, 60) << endl; // Output: -1
-    cout << list.searchRecursive(list, 10) << endl; // Output: 0
+    cout << list.searchRecursive(30) << endl; // Output: 2
+    cout << list.searchRecursive(60) << endl; // Output: -1
+    cout << list.searchRecursive(10) << endl; // Output: 0
 
     return 0;
 }

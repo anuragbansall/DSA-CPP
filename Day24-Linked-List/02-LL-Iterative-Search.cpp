@@ -80,9 +80,9 @@ public:
         size++; // increment the size of the list
     }
 
-    int searchIterative(List &list, int value)
+    int searchIterative(int value)
     {
-        Node *current = list.head;
+        Node *current = head;
         int index = 0;
 
         while (current != NULL)
@@ -108,9 +108,9 @@ int main(void)
     list.push_back(40);
     list.push_back(50);
 
-    cout << list.searchIterative(list, 30) << endl; // Output: 2
-    cout << list.searchIterative(list, 60) << endl; // Output: -1
-    cout << list.searchIterative(list, 10) << endl; // Output: 0
+    cout << list.searchIterative(30) << endl; // Output: 2
+    cout << list.searchIterative(60) << endl; // Output: -1
+    cout << list.searchIterative(10) << endl; // Output: 0
 
     return 0;
 }
