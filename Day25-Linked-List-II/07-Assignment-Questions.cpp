@@ -111,6 +111,91 @@ Node *findIntersection(LinkedList &list1, LinkedList &list2)
     return nullptr; // No intersection point found
 }
 
+void deleteNodes(LinkedList &list, int M, int N)
+{
+    Node *current = list.head;
+
+    while (current)
+    {
+        // skip M nodes
+        for (int i = 1; current && i < M; i++)
+        {
+            current = current->next;
+        }
+
+        if (!current)
+        {
+            break;
+        }
+
+        Node *temp = current->next;
+
+        for (int i = 0; current && i < N; i++)
+        {
+            Node *nodeToDelete = temp;
+            temp = temp->next;
+            delete nodeToDelete; // delete the node
+        }
+
+        current->next = temp;
+
+        current = temp;
+    }
+}
+
+void swapNodes(LinkedList &list, int x, int y)
+{
+    if (x == y)
+    {
+        return;
+    }
+
+    Node *prevX = nullptr;
+    Node *currX = list.head;
+
+    for (int i = 1; currX && i < x; i++)
+    {
+        prevX = currX;
+        currX = currX->next;
+    }
+
+    Node *prevY = nullptr;
+    Node *currY = list.head;
+
+    for (int i = 1; currY && i < y; i++)
+    {
+        prevY = currY;
+        currY = currY->next;
+    }
+
+    if (!currX || !currY)
+    {
+        return;
+    }
+
+    if (prevX)
+    {
+        prevX->next = currY;
+    }
+    else
+    {
+        list.head = currY;
+    }
+
+    if (prevY)
+    {
+        prevY->next = currX;
+    }
+    else
+    {
+        list.head = currX;
+    }
+
+    Node *temp = currY->next;
+    currY->next = currX->next;
+    currX->next = temp;
+}
+
 int main(void)
 {
     /*
@@ -145,6 +230,60 @@ int main(void)
     {
         cout << "No Intersection Point Found" << endl;
     }
+
+    /*
+        Question 2: Delete N Nodes After M Nodes of a Linked List
+        Given a linked list and two integers M and N, traverse the linked list such that you retain M nodes, then delete the next N nodes, and continue the same till the end of the linked list.
+
+        Example 1:
+        M = 2, N = 2
+        LL: 1->2->3->4->5->6->7->8
+        Output: 1->2->5->6
+
+        Example 2:
+        M = 3, N = 2
+        LL: 1->2->3->4->5->6->7->8->9->10
+        Output: 1->2->3->6->7->8
+    */
+
+    LinkedList list3;
+    list3.push_back(1);
+    list3.push_back(2);
+    list3.push_back(3);
+    list3.push_back(4);
+    list3.push_back(5);
+    list3.push_back(6);
+    list3.push_back(7);
+    list3.push_back(8);
+
+    cout << "Original List: ";
+    list3.printList();
+
+    deleteNodes(list3, 2, 2);
+    cout << "After deleting nodes: ";
+    list3.printList();
+
+    /*
+        Question 3: Swapping Nodes in a Linked List
+        Given a linked list and two keys in it, swap nodes for two given keys. Nodes should be swapped by changing links, not by swapping data.
+        Assume all keys in the linked list are distinct.
+
+        Sample Input 1: 1->2->3->4,  x = 2, y = 4
+        Sample Output 1: 1->4->3->2
+    */
+
+    LinkedList list4;
+    list4.push_back(1);
+    list4.push_back(2);
+    list4.push_back(3);
+    list4.push_back(4);
+
+    cout << "Original List: ";
+    list4.printList();
+
+    swapNodes(list4, 2, 4);
+    cout << "After swapping nodes 2 and 4: ";
+    list4.printList();
 
     return 0;
 }
