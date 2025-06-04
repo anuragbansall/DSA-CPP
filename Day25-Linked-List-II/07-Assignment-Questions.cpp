@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 class Node
@@ -257,6 +259,57 @@ void rearrangeEvenOdd(LinkedList &list)
     }
 }
 
+LinkedList *merge(LinkedList *list1, LinkedList *list2)
+{
+    LinkedList *mergedList = new LinkedList();
+    Node *ptr1 = list1->head;
+    Node *ptr2 = list2->head;
+
+    while (ptr1 && ptr2)
+    {
+        if (ptr1->data < ptr2->data)
+        {
+            mergedList->push_back(ptr1->data);
+            ptr1 = ptr1->next;
+        }
+        else
+        {
+            mergedList->push_back(ptr2->data);
+            ptr2 = ptr2->next;
+        }
+    }
+
+    while (ptr1)
+    {
+        mergedList->push_back(ptr1->data);
+        ptr1 = ptr1->next;
+    }
+    while (ptr2)
+    {
+        mergedList->push_back(ptr2->data);
+        ptr2 = ptr2->next;
+    }
+
+    return mergedList;
+}
+
+LinkedList *mergeKSortedLists(vector<LinkedList *> &lists)
+{
+    if (lists.empty())
+    {
+        return nullptr;
+    }
+
+    LinkedList *mergedList = lists[0];
+
+    for (size_t i = 1; i < lists.size(); i++)
+    {
+        mergedList = merge(mergedList, lists[i]);
+    }
+
+    return mergedList;
+}
+
 int main(void)
 {
     /*
@@ -373,6 +426,41 @@ int main(void)
     rearrangeEvenOdd(list5);
     cout << "After rearranging even and odd: ";
     list5.printList();
+
+    /*
+        Question 5: Merge k Sorted Linked Lists
+        Given k sorted linked lists, each of size n, merge them into a single sorted linked list and print the result.
+
+        Sample Input 1:
+        k = 3, n = 2
+        l1 = 1->3->NULL
+        l2 = 6->8->NULL
+        l3 = 9->10->NULL
+
+        Sample Output 1:
+        1->3->6->8->9->10->NULL
+    */
+
+    vector<LinkedList *> lists;
+    LinkedList *list6 = new LinkedList();
+    list6->push_back(1);
+    list6->push_back(3);
+
+    LinkedList *list7 = new LinkedList();
+    list7->push_back(6);
+    list7->push_back(8);
+
+    LinkedList *list8 = new LinkedList();
+    list8->push_back(9);
+    list8->push_back(10);
+
+    lists.push_back(list6);
+    lists.push_back(list7);
+    lists.push_back(list8);
+
+    LinkedList *mergedList = mergeKSortedLists(lists);
+    cout << "Merged List: ";
+    mergedList->printList();
 
     return 0;
 }
