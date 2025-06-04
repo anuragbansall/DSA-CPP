@@ -196,6 +196,67 @@ void swapNodes(LinkedList &list, int x, int y)
     currX->next = temp;
 }
 
+void rearrangeEvenOdd(LinkedList &list)
+{
+    if (!list.head || !list.head->next)
+    {
+        return;
+    }
+
+    Node *evenHead = nullptr;
+    Node *evenTail = nullptr;
+    Node *oddHead = nullptr;
+    Node *oddTail = nullptr;
+
+    Node *current = list.head;
+
+    while (current)
+    {
+        if (current->data % 2 == 0) // even
+        {
+            if (!evenHead)
+            {
+                evenHead = current;
+                evenTail = current;
+            }
+            else
+            {
+                evenTail->next = current;
+                evenTail = evenTail->next;
+            }
+        }
+        else // odd
+        {
+            if (!oddHead)
+            {
+                oddHead = current;
+                oddTail = current;
+            }
+            else
+            {
+                oddTail->next = current;
+                oddTail = oddTail->next;
+            }
+        }
+
+        current = current->next;
+    }
+
+    if (evenTail)
+    {
+        evenTail->next = oddHead;
+        if (oddTail)
+        {
+            oddTail->next = nullptr;
+        }
+        list.head = evenHead;
+    }
+    else
+    {
+        list.head = oddHead;
+    }
+}
+
 int main(void)
 {
     /*
@@ -284,6 +345,34 @@ int main(void)
     swapNodes(list4, 2, 4);
     cout << "After swapping nodes 2 and 4: ";
     list4.printList();
+
+    /*
+        Question 4: Odd Even Linked List
+        We have a Linked List of integers, write a function to modify the linked list such that all even numbers appear before all the odd numbers in the modified linked list.
+        Also, keep the order of even and odd numbers same.
+
+        Sample Input 1: 8->12->10->5->4->1->6->NULL
+        Sample Output 1: 8->12->10->4->6->5->1->NULL
+
+        Sample Input 2: 1->3->5->7->NULL
+        Sample Output 2: 1->3->5->7->NULL
+    */
+
+    LinkedList list5;
+    list5.push_back(8);
+    list5.push_back(12);
+    list5.push_back(10);
+    list5.push_back(5);
+    list5.push_back(4);
+    list5.push_back(1);
+    list5.push_back(6);
+
+    cout << "Original List: ";
+    list5.printList();
+
+    rearrangeEvenOdd(list5);
+    cout << "After rearranging even and odd: ";
+    list5.printList();
 
     return 0;
 }
