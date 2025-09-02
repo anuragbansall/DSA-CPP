@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <vector>
 using namespace std;
 
 class ListNode
@@ -15,6 +16,7 @@ public:
 bool isPalindrome(ListNode *head);
 string decodeString(const string &s);
 string simplifyPath(string &path);
+int trapRainWater(const vector<int> &height);
 
 int main(void)
 {
@@ -68,6 +70,17 @@ int main(void)
     string path = "/home//foo/";
 
     cout << simplifyPath(path) << endl;
+
+    /*
+        Question 4: Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+        Examples:
+        Input: height = [7, 0, 4, 2, 5, 0, 6, 4, 0, 5]
+        Output: 25
+        Explanation: The elevation map [7, 0, 4, 2, 5, 0, 6, 4, 0, 5] can trap 25 units of rainwater.
+    */
+
+    vector<int> height = {7, 0, 4, 2, 5, 0, 6, 4, 0, 5};
+    cout << trapRainWater(height) << endl;
 
     return 0;
 }
@@ -173,4 +186,30 @@ string simplifyPath(string &path)
     }
 
     return current.empty() ? "/" : current;
+}
+
+int trapRainWater(const vector<int> &height)
+{
+    stack<int> st;
+    int waterTrapped = 0;
+    int n = height.size();
+
+    for (int i = 0; i < n; ++i)
+    {
+        while (!st.empty() && height[i] > height[st.top()])
+        {
+            int top = st.top();
+            st.pop();
+
+            if (st.empty())
+                break;
+
+            int distance = i - st.top() - 1;
+            int boundedHeight = min(height[i], height[st.top()]) - height[top];
+            waterTrapped += distance * boundedHeight;
+        }
+        st.push(i);
+    }
+
+    return waterTrapped;
 }
