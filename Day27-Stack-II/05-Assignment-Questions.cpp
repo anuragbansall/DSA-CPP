@@ -14,6 +14,7 @@ public:
 
 bool isPalindrome(ListNode *head);
 string decodeString(const string &s);
+string simplifyPath(string &path);
 
 int main(void)
 {
@@ -44,6 +45,29 @@ int main(void)
         Input: s = "3[a]2[bc]"      Output: "aaabcbc"
         Input: s = "2[abc]3[cd]ef"  Output: "abcabccdcdcdef"
     */
+    string s = "3[a]2[bc]";
+    cout << decodeString(s) << endl;
+
+    /*
+        Question 3: Given an absolute path for a file (Unix-style), simplify it.
+        Note:
+        - An absolute path always begins with '/' (the root directory).
+        - A single dot '.' means the current directory.
+        - A double dot '..' means the parent directory.
+        - Multiple consecutive slashes should be treated as a single slash.
+
+        Examples:
+        Input: path = "/home//foo/"
+        Output: "/home/foo"
+        Explanation: Multiple consecutive slashes are replaced by a single one.
+
+        Input: path = "/home/user/Documents/../Pictures"
+        Output: "/home/user/Pictures"
+        Explanation: ".." moves up one directory level.
+    */
+    string path = "/home//foo/";
+
+    cout << simplifyPath(path) << endl;
 
     return 0;
 }
@@ -116,4 +140,37 @@ string decodeString(const string &s)
     }
 
     return currentString;
+}
+
+string simplifyPath(string &path)
+{
+    stack<string> st;
+    string current;
+
+    path.push_back('/'); // Append a '/' to handle the last segment
+
+    for (char ch : path)
+    {
+        if (ch == '/')
+        {
+            if (current == "..")
+                st.pop();
+            else if (!current.empty() && current != ".")
+                st.push(current);
+
+            current.clear();
+        }
+        else
+        {
+            current += ch;
+        }
+    }
+
+    while (!st.empty())
+    {
+        current = "/" + st.top() + current;
+        st.pop();
+    }
+
+    return current.empty() ? "/" : current;
 }
