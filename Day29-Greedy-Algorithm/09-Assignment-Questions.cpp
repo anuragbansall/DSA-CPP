@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <climits>
 using namespace std;
 
 int maxBalancedStrings(string s)
@@ -59,6 +60,20 @@ string smallestString(int n, int k)
     }
 
     return result;
+}
+
+int maxProfit(vector<int> &prices)
+{
+    int minPrice = INT_MAX;
+    int maxProfit = 0;
+
+    for (int price : prices)
+    {
+        minPrice = min(minPrice, price);
+        maxProfit = max(maxProfit, price - minPrice);
+    }
+
+    return maxProfit;
 }
 
 int main(void)
@@ -127,6 +142,24 @@ int main(void)
     int n = 3, k = 27;
 
     cout << "Smallest string: " << smallestString(n, k) << endl;
+
+    /*
+        Question 4: Best Time to Buy and Sell Stock
+
+        You are given an array prices where prices[i] is the price of a given stock on the i-th day.
+        You want to maximize your profit by choosing a single day to buy one stock and a different day in the future to sell that stock.
+        Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+        Example:
+        Input: prices = [7, 1, 5, 3, 6, 4]
+        Output: 5
+        Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6 - 1 = 5.
+        Note: You must buy before you sell.
+    */
+
+    vector<int> prices = {7, 1, 5, 3, 6, 4};
+
+    cout << "Maximum profit: " << maxProfit(prices) << endl; // Output: 5
 
     return 0;
 }
