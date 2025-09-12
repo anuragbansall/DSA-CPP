@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 int maxBalancedStrings(string s)
@@ -39,6 +40,25 @@ string largestOddNumber(string num)
     }
 
     return ""; // No odd digit found
+}
+
+string smallestString(int n, int k)
+{
+    string result = "";
+
+    while (n != 0)
+    {
+        int value = max(1, k - 26 * (n - 1));
+        value = min(value, 26);
+
+        char ch = 'a' + value - 1;
+
+        result += ch;
+        k -= value;
+        n--;
+    }
+
+    return result;
 }
 
 int main(void)
@@ -87,6 +107,26 @@ int main(void)
     string num = "52";
 
     cout << "Largest odd number: " << largestOddNumber(num) << endl;
+
+    /*
+        Question 3: Smallest String With a Given Numeric Value
+
+        The numeric value of a lowercase character is its position in the alphabet (1-indexed), so 'a' = 1, 'b' = 2, ..., 'z' = 26.
+        The numeric value of a string is the sum of its characters' numeric values.
+
+        Given two integers n and k, return the lexicographically smallest string of length n with a numeric value equal to k.
+
+        Note: A string x is lexicographically smaller than string y if x comes before y in dictionary order.
+
+        Example:
+        Input: n = 3, k = 27
+        Output: "aay"
+        Explanation: The numeric value is 1 + 1 + 25 = 27, and "aay" is the smallest string of length 3 with this value.
+    */
+
+    int n = 3, k = 27;
+
+    cout << "Smallest string: " << smallestString(n, k) << endl;
 
     return 0;
 }
