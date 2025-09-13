@@ -76,6 +76,60 @@ int maxProfit(vector<int> &prices)
     return maxProfit;
 }
 
+bool canSplitArray(vector<int> &nums, int k, int mid)
+{
+    int splitCount = 1;
+    int currentSum = 0;
+
+    for (int num : nums)
+    {
+        currentSum += num;
+
+        if (currentSum > mid)
+        {
+            splitCount++;
+            currentSum = num;
+
+            if (splitCount > k)
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+int splitArrayLargestSum(vector<int> &nums, int k)
+{
+    int min = INT_MIN;
+    int max = 0;
+    for (int num : nums)
+    {
+        min = num > min ? num : min;
+        max += num;
+    }
+
+    int result = max;
+
+    while (min <= max)
+    {
+        int mid = min + (max - min) / 2;
+
+        if (canSplitArray(nums, k, mid))
+        {
+            max = mid - 1;
+            result = mid;
+        }
+        else
+        {
+            min = mid + 1;
+        }
+    }
+
+    return result;
+}
+
 int main(void)
 {
     /*
@@ -160,6 +214,25 @@ int main(void)
     vector<int> prices = {7, 1, 5, 3, 6, 4};
 
     cout << "Maximum profit: " << maxProfit(prices) << endl; // Output: 5
+
+    /*
+        Question 5: Split Array Largest Sum
+
+        Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the largest sum among these subarrays is minimized.
+        Return the minimized largest sum of the split.
+
+        Note: A subarray is a contiguous part of the array.
+
+        Example:
+        Input: nums = [7, 2, 5, 10, 8], k = 2
+        Output: 18
+        Explanation: There are several ways to split nums into two subarrays.
+        The best way is to split it into [7, 2, 5] and [10, 8], where the largest sum among the two subarrays is 18.
+    */
+
+    vector<int> nums = {7, 2, 5, 10, 8};
+
+    cout << "Minimized largest sum: " << splitArrayLargestSum(nums, 2) << endl;
 
     return 0;
 }
