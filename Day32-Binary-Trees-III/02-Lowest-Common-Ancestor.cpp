@@ -64,9 +64,10 @@ int LCA(Node *root, int n1, int n2)
 
     while (i < path1.size() && j < path2.size())
     {
-        if (path1[i] == path2[j])
-            lca = path1[i];
+        if (path1[i] != path2[j])
+            return lca;
 
+        lca = path1[i];
         i++;
         j++;
     }
@@ -103,9 +104,9 @@ int main(void)
     The LCA of nodes 4 and 6 is 1, as 1 is the deepest node that is an ancestor of both 4 and 6.
 
     Approach:
-    1. Find the path from the root to each of the two nodes.
-    2. Compare the paths to find the last common node.
-    3. The last common node in the paths is the LCA.
+    1. Find the path from the root to each of the two nodes (n1 and n2) and store these paths in two separate vectors.
+    2. Compare the two paths to find the last common node, which will be the LCA.
+    3. Return the value of the LCA node.
 
     Time Complexity: O(N) where N is the number of nodes in the binary tree.
     Space Complexity: O(H) where H is the height of the binary tree (for storing the paths).
