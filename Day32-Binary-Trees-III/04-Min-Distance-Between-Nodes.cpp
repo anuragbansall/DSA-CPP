@@ -56,7 +56,7 @@ Node *LCA(Node *root, int n1, int n2)
     return (leftLCA != nullptr) ? leftLCA : rightLCA; // Otherwise return the non-null child
 }
 
-int findDistance(Node *root, int k, int distance)
+int findDistance(Node *root, int k)
 {
     if (root == nullptr)
     {
@@ -65,20 +65,20 @@ int findDistance(Node *root, int k, int distance)
 
     if (root->data == k)
     {
-        return distance; // If the current node matches k, return the distance
+        return 0; // If the current node matches k, return 0
     }
 
     // Recur for left and right subtrees
-    int leftDistance = findDistance(root->left, k, distance + 1);
-    int rightDistance = findDistance(root->right, k, distance + 1);
+    int leftDistance = findDistance(root->left, k);
+    int rightDistance = findDistance(root->right, k);
 
     if (leftDistance != -1)
     {
-        return leftDistance; // If found in left subtree, return the distance
+        return leftDistance + 1; // If found in left subtree, return the distance from left subtree
     }
     else if (rightDistance != -1)
     {
-        return rightDistance; // Otherwise, return the distance from right subtree
+        return rightDistance + 1; // Otherwise, return the distance from right subtree
     }
 
     return -1; // If the node is not found in either subtree
@@ -93,8 +93,8 @@ int minDistance(Node *root, int n1, int n2)
         return -1; // If LCA is null, one or both nodes are not present in the tree
     }
 
-    int d1 = findDistance(lca, n1, 0); // Find distance from LCA to n1
-    int d2 = findDistance(lca, n2, 0); // Find distance from LCA to n2
+    int d1 = findDistance(lca, n1); // Find distance from LCA to n1
+    int d2 = findDistance(lca, n2); // Find distance from LCA to n2
 
     if (d1 == -1 || d2 == -1)
     {
