@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
+#include <string>
 using namespace std;
 
 class Node
@@ -78,6 +80,25 @@ Node *removeLeafNodes(Node *root, int target)
     return root;
 }
 
+string findDuplicateSubtrees(Node *root, unordered_map<string, int> &seen, vector<Node *> &duplicates)
+{
+    if (root == nullptr)
+    {
+        return "#";
+    }
+
+    string serial = to_string(root->data) + "," + findDuplicateSubtrees(root->left, seen, duplicates) + "," + findDuplicateSubtrees(root->right, seen, duplicates);
+
+    seen[serial]++;
+
+    if (seen[serial] == 2)
+    {
+        duplicates.push_back(root);
+    }
+
+    return serial;
+}
+
 int main(void)
 {
     vector<int> preorder = {1, 2, 4, 7, -1, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
@@ -110,6 +131,18 @@ int main(void)
 
     int target = 5;
     root = removeLeafNodes(root, target);
+
+    /*
+        Question 4: Given the root of a binary tree, return all duplicate subtrees.
+        For each type of duplicate subtree, you only need to return the root node of any one of them.
+        Two subtrees are considered duplicates if they have the same structure and the same node values.
+    */
+
+    unordered_map<string, int> seen;
+    vector<Node *> duplicates;
+
+    findDuplicateSubtrees(root, seen, duplicates);
+    cout << "Number of duplicate subtrees: " << duplicates.size() << endl;
 
     return 0;
 }
