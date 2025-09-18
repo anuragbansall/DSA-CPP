@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
+#include <climits>
 using namespace std;
 
 class Node
@@ -99,6 +100,19 @@ string findDuplicateSubtrees(Node *root, unordered_map<string, int> &seen, vecto
     return serial;
 }
 
+int maxPathSum(Node *root, int &maxSum)
+{
+    if (root == nullptr)
+        return 0;
+
+    int leftSum = max(0, maxPathSum(root->left, maxSum));
+    int rightSum = max(0, maxPathSum(root->right, maxSum));
+
+    maxSum = max(maxSum, leftSum + rightSum + root->data);
+
+    return root->data + max(leftSum, rightSum);
+}
+
 int main(void)
 {
     vector<int> preorder = {1, 2, 4, 7, -1, -1, -1, 5, -1, -1, 3, -1, 6, -1, -1};
@@ -143,6 +157,15 @@ int main(void)
 
     findDuplicateSubtrees(root, seen, duplicates);
     cout << "Number of duplicate subtrees: " << duplicates.size() << endl;
+
+    /*
+        Question 5: In a binary tree, a path is a sequence of nodes where each pair of adjacent nodes in the sequence is connected by an edge. Each node can appear at most once in the sequence. The path does not need to pass through the root. The path sum is the sum of the node values along the path. Given the root of a binary tree, return the maximum path sum of any non-empty path.
+    */
+
+    int maxSum = INT_MIN;
+    maxPathSum(root, maxSum);
+
+    cout << "Maximum path sum: " << maxSum << endl;
 
     return 0;
 }
