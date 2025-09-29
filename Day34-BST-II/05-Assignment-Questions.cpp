@@ -73,6 +73,34 @@ void rangeSumBST(Node *root, int low, int high, int &sum)
     }
 }
 
+int minDiffInBST(Node *root, int K)
+{
+    int minDiff = INT_MAX;
+    int closestValue = -1; // Assuming all node values are non-negative
+
+    while (root != nullptr)
+    {
+        int currentDiff = abs(root->data - K);
+
+        if (currentDiff < minDiff)
+        {
+            minDiff = currentDiff;
+            closestValue = root->data;
+        }
+
+        if (K < root->data)
+        {
+            root = root->left;
+        }
+        else
+        {
+            root = root->right;
+        }
+    }
+
+    return closestValue;
+}
+
 int main(void)
 {
     /*
@@ -85,6 +113,31 @@ int main(void)
 
     rangeSumBST(root, low, high, sum);
     cout << "Range Sum BST: " << sum << endl;
+
+    /*
+        Question 2:
+        Given a binary search tree and a target value K, find the node value in the BST
+        that has the minimum absolute difference with K.
+
+        Example BST:
+                8
+               / \
+              5  11
+             / \   \
+            3   6  20
+
+        Input 1: K = 5
+        Output 1: ans = 5 (abs diff = 0)
+
+        Input 2: K = 19
+        Output 2: ans = 20 (abs diff = 1)
+    */
+    vector<int> values2 = {8, 5, 11, 3, 6, 20};
+    Node *root2 = buildBST(values2);
+    int K = 19;
+
+    int closestValue = minDiffInBST(root2, K);
+    cout << "Closest Value to " << K << " in BST: " << closestValue << endl;
 
     return 0;
 }
