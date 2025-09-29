@@ -152,6 +152,39 @@ bool twoSumBSTs(Node *root1, Node *root2, int target)
     return findComplement(root2, values, target);
 }
 
+struct BSTInfo
+{
+    bool isBST;
+    int minVal;
+    int maxVal;
+    int sum;
+
+    BSTInfo(bool bst, int minV, int maxV, int s) : isBST(bst), minVal(minV), maxVal(maxV), sum(s) {}
+};
+
+BSTInfo maxSumBSTUtil(Node *root, int &maxSum)
+{
+    if (root == nullptr)
+    {
+        return BSTInfo(true, INT_MAX, INT_MIN, 0);
+    }
+
+    BSTInfo leftInfo = maxSumBSTUtil(root->left, maxSum);
+    BSTInfo rightInfo = maxSumBSTUtil(root->right, maxSum);
+
+    if (leftInfo.isBST && rightInfo.isBST && root->data > leftInfo.maxVal && root->data < rightInfo.minVal)
+    {
+        int currentSum = leftInfo.sum + rightInfo.sum + root->data;
+        maxSum = max(maxSum, currentSum);
+
+        return BSTInfo(true, min(root->data, leftInfo.minVal), max(root->data, rightInfo.maxVal), currentSum);
+    }
+    else
+    {
+        return BSTInfo(false, 0, 0, 0);
+    }
+}
+
 int main(void)
 {
     /*
@@ -213,6 +246,24 @@ int main(void)
     int target = 5;
     bool result4 = twoSumBSTs(root4_1, root4_2, target);
     cout << "Two Sum BSTs (Target = " << target << "): " << (result4 ? "True" : "False") << endl;
+
+    /*
+        Question 5 : Given a binary tree root, return the maximum sum of all keys of any sub-tree which is also a Binary Search Tree (BST).
+
+        Assume a BST is defined as follows:
+        ● The left subtree of a node contains only nodes with keys less than the node's
+        key.
+        ● The right subtree of a node contains only nodes with keys greater than the
+        node's key.
+        ● Both the left and right subtrees must also be binary search trees.
+    */
+
+    vector<int> values5 = {1, 4, 3, 2, 5, 4, 6};
+    Node *root5 = buildBST(values5);
+    int maxSum = 0;
+
+    maxSumBSTUtil(root5, maxSum);
+    cout << "Maximum Sum BST in Binary Tree: " << maxSum << endl;
 
     return 0;
 }
