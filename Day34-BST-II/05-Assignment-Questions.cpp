@@ -101,6 +101,25 @@ int minDiffInBST(Node *root, int K)
     return closestValue;
 }
 
+void kthSmallestUtil(Node *root, int k, int &count, int &result)
+{
+    if (root == nullptr || result != -1)
+    {
+        return;
+    }
+
+    kthSmallestUtil(root->left, k, count, result);
+
+    count++;
+    if (count == k)
+    {
+        result = root->data;
+        return;
+    }
+
+    kthSmallestUtil(root->right, k, count, result);
+}
+
 int main(void)
 {
     /*
@@ -138,6 +157,18 @@ int main(void)
 
     int closestValue = minDiffInBST(root2, K);
     cout << "Closest Value to " << K << " in BST: " << closestValue << endl;
+
+    /*
+        Question 3 : Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+    */
+    vector<int> values3 = {3, 1, 4, 2};
+    Node *root3 = buildBST(values3);
+    int k = 1;
+    int count = 0;
+    int result = -1;
+
+    kthSmallestUtil(root3, k, count, result);
+    cout << k << "th Smallest Element in BST: " << result << endl;
 
     return 0;
 }
