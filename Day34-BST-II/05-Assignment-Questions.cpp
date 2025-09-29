@@ -2,6 +2,7 @@
 #include <vector>
 #include <climits>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 class Node
@@ -120,6 +121,37 @@ void kthSmallestUtil(Node *root, int k, int &count, int &result)
     kthSmallestUtil(root->right, k, count, result);
 }
 
+void inorderTraversal(Node *root, set<int> &values)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+
+    inorderTraversal(root->left, values);
+    values.insert(root->data);
+    inorderTraversal(root->right, values);
+}
+
+bool findComplement(Node *root, set<int> &values, int target)
+{
+    if (root == nullptr)
+        return false;
+
+    if (values.find(target - root->data) != values.end())
+        return true;
+
+    return findComplement(root->left, values, target) || findComplement(root->right, values, target);
+}
+
+bool twoSumBSTs(Node *root1, Node *root2, int target)
+{
+    set<int> values;
+
+    inorderTraversal(root1, values);
+    return findComplement(root2, values, target);
+}
+
 int main(void)
 {
     /*
@@ -169,6 +201,18 @@ int main(void)
 
     kthSmallestUtil(root3, k, count, result);
     cout << k << "th Smallest Element in BST: " << result << endl;
+
+    /*
+        Question 4 : Given two binary search trees, return True if and only if there is a node in the first tree and a node in the second tree whose values sum up to a given integer target.
+    */
+    vector<int> values4_1 = {2, 1, 4};
+    vector<int> values4_2 = {1, 0, 3};
+    Node *root4_1 = buildBST(values4_1);
+    Node *root4_2 = buildBST(values4_2);
+
+    int target = 5;
+    bool result4 = twoSumBSTs(root4_1, root4_2, target);
+    cout << "Two Sum BSTs (Target = " << target << "): " << (result4 ? "True" : "False") << endl;
 
     return 0;
 }
