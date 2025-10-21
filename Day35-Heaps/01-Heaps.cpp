@@ -48,6 +48,7 @@ int main(void)
     - In a max heap, for any given node C, if P is a parent node of C, then the key (the value) of P is greater than or equal to the key of C.
     - In a min heap, the key of P is less than or equal to the key of C.
     - The heap is used to implement priority queues, and it provides efficient access to the highest (or lowest) priority element.
+    - It is visualized as a complete binary tree. But it is usually implemented using arrays / vectors for efficiency.
 
     - Common operations on heaps include insertion, deletion of the root element, and heapification.
     - The time complexity for these operations is O(log n), where n is the number of elements in the heap.
@@ -62,4 +63,23 @@ int main(void)
     - push(element): Inserts an element into the heap. Time Complexity: O(log n)
     - pop(): Removes the top element from the heap. Time Complexity: O(log n)
     - top(): Returns the top element of the heap without removing it. Time Complexity: O(1)
+
+    Complete Binary Tree:
+    - A complete binary tree is a binary tree in which all the levels are completely filled except possibly the last level, which is filled from left to right.
+
+    Example:
+            10
+          /    \
+         15     30
+        / \    /
+      40  50  100
+    - This is a complete binary tree.
+
+    Example:
+            30
+          /
+         15
+        / \
+      5   3
+    - This is not a complete binary tree.
 */
