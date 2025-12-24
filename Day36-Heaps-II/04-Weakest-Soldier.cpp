@@ -51,6 +51,11 @@ int main(void)
         int soldierCount = 0;
         for (int j = 0; j < mat[i].size(); j++)
         {
+            if (mat[i][j] == 0)
+            {
+                break; // Since soldiers are always before civilians
+            }
+
             soldierCount += mat[i][j];
         }
 
