@@ -51,5 +51,10 @@ int main(void)
         7. Return the maximum length found.
     */
 
+    vector<int> arr = {15, -2, 2, -8, 1, 7, 10, 23};
+    int result = largestSubarrayWithZeroSum(arr);
+
+    cout << "Length of the largest subarray with sum 0: " << result << endl;
+
     return 0;
 }
