@@ -3,6 +3,8 @@
 #include <map>
 #include <unordered_map>
 #include <queue>
+#include <string>
+#include <algorithm>
 using namespace std;
 
 class Node
@@ -69,6 +71,30 @@ vector<int> twoSum(vector<int> &arr, int target)
     return {}; // Return empty if no solution found
 }
 
+string frequencySort(string s)
+{
+    unordered_map<char, int> freqMap; // character -> frequency
+
+    for (char c : s)
+    {
+        freqMap[c]++;
+    }
+
+    vector<pair<char, int>> freqVec(freqMap.begin(), freqMap.end());
+
+    sort(freqVec.begin(), freqVec.end(), [](const pair<char, int> &a, const pair<char, int> &b)
+         { return a.second > b.second; });
+
+    string result;
+
+    for (const auto &p : freqVec)
+    {
+        result.append(p.second, p.first);
+    }
+
+    return result;
+}
+
 int main(void)
 {
     /*
@@ -94,8 +120,9 @@ int main(void)
         Use vertical order traversal with horizontal distance (column) mapping and keep
         the deepest node for each column (e.g., BFS with level tracking).
 
-        Question 2 :
-        Two Sum
+        Question 2 : Two Sum
+
+        Problem:
         Given an array of integers arr[] and an integer target, return indices of the two numbers such that they add up to target.
         You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.
 
@@ -105,6 +132,22 @@ int main(void)
 
         Sample Input 2 : arr = [3,2,4], target = 6
         Sample Output 2 : [1, 2]
+
+        Question 3 : Sort by Frequency
+
+        Problem:
+        Given a string s, sort it in decreasing order based on the frequency of the characters. The frequency of a character is the number of times it appears in the string.
+        Return the sorted string. If there are multiple answers, return any of them.
+
+        Sample Input 1 : s = "cccaaa"
+        Sample Output 1 : "aaaccc"
+        Both 'c' and 'a' appear three times, so both "cccaaa" and "aaaccc" are valid answers.
+        Note that "cacaca" is incorrect, as the same characters must be together.
+
+        Sample Input 2 : s = "tree"
+        Sample Output 2 :"eert"
+        'e' appears twice while 'r' and 't' both appear once.
+        So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer
     */
 
     // Answer 1: Bottom View of a Binary Tree
@@ -138,6 +181,11 @@ int main(void)
         cout << idx << " ";
     }
     cout << endl;
+
+    // Answer 3: Sort by Frequency
+    string s = "tree";
+    string sortedStr = frequencySort(s);
+    cout << "Sorted by frequency: " << sortedStr << endl;
 
     return 0;
 }
