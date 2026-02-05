@@ -95,6 +95,35 @@ string frequencySort(string s)
     return result;
 }
 
+string getHint(string secret, string guess)
+{
+    int bulls = 0, cows = 0;
+    unordered_map<char, int> freqMap; // character -> frequency for secret
+
+    for (int i = 0; i < secret.size(); i++)
+    {
+        if (secret[i] == guess[i])
+        {
+            bulls++;
+        }
+        else
+        {
+            freqMap[secret[i]]++;
+        }
+    }
+
+    for (int i = 0; i < guess.size(); i++)
+    {
+        if (secret[i] != guess[i] && freqMap[guess[i]] > 0)
+        {
+            cows++;
+            freqMap[guess[i]]--;
+        }
+    }
+
+    return to_string(bulls) + "A" + to_string(cows) + "B";
+}
+
 int main(void)
 {
     /*
@@ -148,6 +177,31 @@ int main(void)
         Sample Output 2 :"eert"
         'e' appears twice while 'r' and 't' both appear once.
         So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer
+
+        Question 4 : Bulls & Cows
+
+        Problem:
+        You are playing a game with your friend. You write down a secret number and ask your friend to guess what the number is. When your friend makes a guess, you provide a hint with
+        the following info:
+        ● The number of "bulls", which are digits in the guess that are in the correct position.
+        ● The number of "cows", which are digits in the guess that are in your secret number
+        but are located in the wrong position. Specifically, the non-bull digits in the guess that
+        could be rearranged such that they become bulls.
+        Given the secret number secret and your friend's guess guess, return the hint for your
+        friend's guess.
+
+        The hint should be formatted as "xAyB", where x is the number of bulls and y is the number
+        of cows. Note that both secret and guess may contain duplicate digits.
+
+        Sample Input 1 : secret = "1807", guess = "7810"
+        Sample Output 1 : "1A3B"
+        Explanation: Bulls are highlighted with orange and cows are underlined:
+        "1807", "7810"
+
+        Sample Input 2 : secret = "1123", guess = "0111"
+        Sample Output 2 : "1A1B"
+        Explanation: Bulls are highlighted with orange and cows are underlined:
+        "0111", (“0111” or “0111”)
     */
 
     // Answer 1: Bottom View of a Binary Tree
@@ -186,6 +240,13 @@ int main(void)
     string s = "tree";
     string sortedStr = frequencySort(s);
     cout << "Sorted by frequency: " << sortedStr << endl;
+
+    // Answer 4: Bulls & Cows
+    string secret = "1807";
+    string guess = "7810";
+
+    string hint = getHint(secret, guess);
+    cout << "Bulls & Cows hint: " << hint << endl;
 
     return 0;
 }
