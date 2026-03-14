@@ -2,8 +2,58 @@
 #include <list> // List is a double linked list in C++. We can use it to store the adjacent nodes of each node in the graph.
 using namespace std;
 
+class Graph
+{
+    int v;
+    list<int> *l;
+
+public:
+    Graph(int v)
+    {
+        this->v = v;
+        l = new list<int>[v];
+    };
+
+    void addEdge(int i, int j, bool undir = true) // i -- j
+    {
+        l[i].push_back(j);
+
+        if (undir)
+        {
+            l[j].push_back(i);
+        }
+    };
+
+    void printAdjList()
+    {
+        for (int i = 0; i < v; i++)
+        {
+            cout << i << "->";
+            for (auto node : l[i])
+            {
+                cout << node << ",";
+            }
+            cout << endl;
+        }
+    };
+};
+
 int main(void)
 {
+    Graph g(4);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 3);
+    g.addEdge(2, 3);
+
+    /*
+    The graph looks like this:
+        0 --- 1
+        |     |
+        2 --- 3
+    */
+
+    g.printAdjList();
 
     return 0;
 }
